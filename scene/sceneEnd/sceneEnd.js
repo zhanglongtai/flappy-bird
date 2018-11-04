@@ -1,4 +1,4 @@
-class SceneTitle extends Scene {
+class SceneEnd extends Scene {
     constructor(game) {
         super(game)
 
@@ -15,13 +15,16 @@ class SceneTitle extends Scene {
         this.lands.update = () => {}
         this.addElement(this.lands)
 
-        this.text = Label.new(this.game, 'press Enter to start game', 80, 220)
-        this.addElement(this.text)
+        this.text1 = Label.new(this.game, 'Game over', 150, 180)
+        this.addElement(this.text1)
+
+        this.text2 = Label.new(this.game, 'Press R to return main menu', 60, 220)
+        this.addElement(this.text2)
     }
 
     setInput() {
-        this.game.registerAction('Enter', () => {
-            const scene = SceneMain.new(this.game)
+        this.game.registerAction('r', () => {
+            const scene = SceneTitle.new(this.game)
             this.game.replaceScene(scene)
         })
     }
