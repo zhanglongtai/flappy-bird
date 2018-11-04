@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <style>
+            #id-game-interface {
+                border: 1px solid;
+            }
+        </style>
+        <script src="config.js"></script>
+        <script src="game/utils.js"></script>
+        <script src="game/game.js"></script>
+        <script src="game/sceneBase.js"></script>
+        <script src="game/gameImage.js"></script>
+        <script src="game/particleSystem.js"></script>
+        <script src="game/label.js"></script>
+        <script src="game/animation.js"></script>
+        <script src="scene/sceneTitle/pipes.js"></script>
+        <script src="scene/sceneTitle/sceneTitle.js"></script>
+        <script src="scene/sceneMain/player.js"></script>
+        <script src="scene/sceneMain/bullet.js"></script>
+        <script src="scene/sceneMain/enemy.js"></script>
+        <script src="scene/sceneMain/cloud.js"></script>
+        <script src="scene/sceneMain/sceneMain.js"></script>
+        <!-- <script src="scene/sceneEnd/sceneEnd.js"></script> -->
+    </head>
+    <body>
+        <canvas id="id-game-interface" width="400" height="600"></canvas>
+        <br>
+        <input id="id-fps-input" type="range" value="1">
+        <br>
+        <div id="game-controls">
+        </div>
+        <!-- <textarea id="id-log" rows="20" cols="50"></textarea> -->
+        <script src="main.js"></script>
+        <script>
+            const es = (sel) => {
+                return document.querySelectorAll(sel)
+            }
+
+            const bindAll = (sel, eventname, callback) => {
+                const all = es(sel)
+
+                for (const e of all) {
+                    e.addEventListener(eventname, (event) => {
+                        callback(event)
+                    })
+                }
+            }
+
+            const templateControl = function(key, item) {
+                const t = `
+                    <div>
+                        <label class="game-controls">
+                            <input
+                                class="class-auto-slider" type="range" max='300'
+                                value="${item.value}" data-value="config.${key}"
+                            >
+                            ${item._comment}: <span class="game-label"></span>
+                        </label>
+                    </div>
+                `
+
+                return t
+            }
+
+            const insertControls = function() {
+                const div = document.querySelector('#game-controls')
+
+                const keys = Object.keys(config)
+
+                for (const key of keys) {
+                    const item = config[key]
+                    const html = templateControl(key, item)
+
+                    div.insertAdjacentHTML('beforeend', html)
+                }
+            }
+
+            const bindEvents = function() {
+                bindAll('.class-auto-slider', 'input', (event) => {
+                    const target = event.target
+                    const bindValue = target.dataset.value
+                    const value = target.value
+                    eval(bindValue + '.value =' + value)
+
+                    const label = target.closest('label').querySelector('.game-label')
+                    label.innerText = value
+                })
+            }
+
+            const __init =  function() {
+                insertControls()   
+                bindEvents()
+            }
+
+            __init()
+        </script>
+    </body>
+</html>
