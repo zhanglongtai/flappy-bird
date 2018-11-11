@@ -11,7 +11,8 @@ class Skys {
 
     setUp() {
         this.skyList = []
-        for (let i = 0; i < 3; i++) {
+        this.skyNum = 4
+        for (let i = 0; i < this.skyNum; i++) {
             const s = GameImage.new(this.game, 'sky')
             s.width = s.texture.width
             this.interval = s.width
@@ -25,8 +26,8 @@ class Skys {
         // land forward
         for (const s of this.skyList) {
             s.x -= 5
-            if(s.x < -300) {
-                s.x += this.interval * 3
+            if(s.x < -s.width) {
+                s.x += this.interval * (this.skyNum - 1)
             }
         }
     }
